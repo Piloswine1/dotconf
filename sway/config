@@ -5,12 +5,12 @@
 # Read `man 5 sway` for a complete reference.
 
 # setting gaps
-gaps outer 5
+gaps outer 3
 gaps inner 0
 
 #setting windows
 default_border pixel
-for_window [tiling] border pixel 3
+for_window [tiling] border pixel 1
 smart_gaps on
 smart_borders on
 
@@ -18,6 +18,7 @@ smart_borders on
 assign [window_role="^browser$"] workspace 2:www
 assign [title="Sublime Text"] workspace 3:editor
 assign [title="VSCodium"] workspace 3:editor
+assign [class="code-oss"] workspace 3:editor
 assign [class="Thunderbird"] workspace 4:mail
 assign [class="^discord$"] workspace 5:discord
 
@@ -45,15 +46,15 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run -l 15 --nf=#F8F8F2 --nb=#282A36 --sb=#6272A4 --sf=#F8F8F2 --fn 'monospace-10' --no-overlap --scrollbar=always
-# set $menu wofi -S run
+set $menu_old bemenu-run -l 15 --nf=#F8F8F2 --nb=#282A36 --sb=#6272A4 --sf=#F8F8F2 --fn 'monospace-10' --no-overlap --scrollbar=always
+set $menu wofi -S run
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
-output * bg /usr/share/wallpapers/kde-bg.jpg fill
+output * bg /usr/share/wallpapers/arch.png fill
 
 #
 # Example configuration:
@@ -80,12 +81,12 @@ exec swayidle -w \
 #
 # Example configuration:
 #
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
+input "1267:12312:ELAN0501:00_04F3:3018_Touchpad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+#    middle_emulation enabled
+}
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -108,7 +109,7 @@ input * {
 
     # Start your launcher
     bindsym --to-code $mod+d exec $menu
-    bindsym --to-code $mod+Shift+x exec env WINIT_UNIX_BACKEND=x11 GDK_BACKEND=x11 QT_QPA_PLATFORM=xcb WINIT_UNIX_BACKEND=x11 $menu
+    bindsym --to-code $mod+Shift+x exec env WINIT_UNIX_BACKEND=x11 GDK_BACKEND=x11 QT_QPA_PLATFORM=xcb WINIT_UNIX_BACKEND=x11 $menu_old
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -170,8 +171,8 @@ input * {
     bindsym $mod+Shift+1 move container to workspace $workspace_terminals
     bindsym $mod+Shift+2 move container to workspace $workspace_www
     bindsym $mod+Shift+3 move container to workspace $workspace_editor
-    bindsym $mod+Shift+4 move container to workspace $workspace_discord
-    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+4 move container to workspace $workspace_mail
+    bindsym $mod+Shift+5 move container to workspace $workspace_discord
     bindsym $mod+Shift+6 move container to workspace 6
     bindsym $mod+Shift+7 move container to workspace 7
     bindsym $mod+Shift+8 move container to workspace 8
@@ -240,6 +241,13 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Dracula'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+}
 
 #
 # Status Bar:

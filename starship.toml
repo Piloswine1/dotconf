@@ -1,30 +1,40 @@
-[aws]
-symbol = " "
-
 [battery]
-disabled = true
+disabled = false
 full_symbol = ""
 charging_symbol = ""
 discharging_symbol = ""
 
 [directory]
-prefix = ""
+format = "[$path]($style)[$read_only]($read_only_style) "
 disabled = false
 
 [character]
-symbol = "❯"
-error_symbol = "✖"
-use_symbol_for_status = true
+success_symbol = "[❯](bold green)"
+error_symbol = "[✖](bold red)"
+vicmd_symbol = "[❮](bold green)"
 
-[username]
-disabled = true
-show_always = true
+[git_branch]
+format = "[on](bold) [$symbol$branch]($style) "
+symbol = " "
+style =	"bold purple"
 
-[hostname]
-ssh_only = false
-prefix = "⟪"
-suffix = "⟫"
-disabled = true
+[package]
+format = "[pkg](bold) [$symbol$version]($style) "
+symbol = " "
+display_private = true
+
+# [username]
+# disabled = true
+# show_always = true
+
+# [hostname]
+# ssh_only = true
+# prefix = "⟪"
+# suffix = "⟫"
+# disabled = false
+
+[aws]
+symbol = " "
 
 [conda]
 symbol = " "
@@ -37,9 +47,6 @@ symbol = " "
 
 [elm]
 symbol = " "
-
-[git_branch]
-symbol = " "
 
 [golang]
 symbol = " "
@@ -63,10 +70,8 @@ symbol = " "
 symbol = " "
 
 [nodejs]
+format = "[via](bold) [$symbol$version]($style) "
 symbol = " "
-
-[package]
-symbol = " "
 
 [php]
 symbol = " "
@@ -78,4 +83,5 @@ symbol = " "
 symbol = " "
 
 [rust]
+format = "[via](bold) [$symbol$version]($style) "
 symbol = " "

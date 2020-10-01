@@ -8,7 +8,7 @@
     "position": "top",
 
     // If height property would be not present, it'd be calculated dynamically
-    "height": 30,
+    "height": 25,
 
     "modules-left": [
         "sway/workspaces",
@@ -22,6 +22,7 @@
         "memory",
         "cpu",
         "temperature",
+        "battery",
         "custom/keyboard-layout",
         "pulseaudio",
         "tray",
@@ -98,7 +99,7 @@
         "format": "{icon} {name}",
         "format-icons": {
             "1:terminals": "", // Icon: terminal
-            "2:www": "龜", // Icon: firefox-browser
+            "2:www": "", // Icon: firefox-browser
             "3:editor": "", // Icon: code
             "4:mail": "", //Icon: mail
             "5:discord": "", // Icon: discord
@@ -132,6 +133,18 @@
           ""  // Icon: temperature-full
       ],
       "tooltip": true
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
     },
 
     "tray": {
