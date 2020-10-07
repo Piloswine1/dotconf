@@ -19,6 +19,7 @@ assign [window_role="^browser$"] workspace 2:www
 assign [title="Sublime Text"] workspace 3:editor
 assign [title="VSCodium"] workspace 3:editor
 assign [class="code-oss"] workspace 3:editor
+assign [app_id="qtcreator"] workspace 3:editor
 assign [class="Thunderbird"] workspace 4:mail
 assign [class="^discord$"] workspace 5:discord
 
