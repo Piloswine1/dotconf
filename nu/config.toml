@@ -1,5 +1,17 @@
 completion_mode = "circular"
-path = ["", "/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/usr/bin/site_perl", "/usr/bin/vendor_perl", "/usr/bin/core_perl", "/home/pilo/.cargo/bin", "/home/pilo/.deno/bin"]
+path = [
+    "", 
+    "/usr/local/sbin", 
+    "/usr/local/bin", 
+    "/usr/bin", 
+    "/usr/bin/site_perl", 
+    "/usr/bin/vendor_perl", 
+    "/usr/bin/core_perl", 
+    "/home/pilo/.cargo/bin", 
+    "/home/pilo/.deno/bin",
+    "/home/pilo/.config/yarn/global/node_modules/.bin",
+    "/home/pilo/.yarn/bin"
+    ]
 prompt = "echo $(starship prompt)"
 skip_welcome_message = true
 

@@ -16,6 +16,9 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 
+" NERDtree
+Plug 'preservim/nerdtree'
+
 " hz
 Plug 'sheerun/vim-polyglot'
 Plug 'ludovicchabant/vim-gutentags'
