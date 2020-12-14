@@ -1,53 +1,51 @@
-set shell=/bin/bash
+ call plug#begin('~/.vim/plugged')
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'junegunn/fzf.vim'
+ Plug 'neoclide/coc.nvim', {'branch': 'release'}
+ Plug 'dracula/vim', { 'as': 'dracula' }
+ Plug 'itchyny/lightline.vim'
+ Plug 'ludovicchabant/vim-gutentags'
+ Plug 'rstacruz/vim-closer'
 
-call plug#begin('~/.vim/plugged')
+ "clap
+ Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
-" FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+ "NErDtree
+ Plug 'preservim/nerdtree'
 
-" complition
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+ "multiline
+ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-" theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+ "tabline
+ Plug 'bagrat/vim-buffet'
 
-" GUI
-Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
+ "icons
+ Plug 'ryanoasis/vim-devicons'
 
-" NERDtree
-Plug 'preservim/nerdtree'
+ "langs
+ Plug 'sheerun/vim-polyglot'
 
-" hz
-Plug 'sheerun/vim-polyglot'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
-Plug 'rstacruz/vim-closer'
-Plug 'bagrat/vim-buffet'
-Plug 'ryanoasis/vim-devicons'
-Plug 'psliwka/vim-smoothie'
-Plug 'https://github.com/AndrewRadev/splitjoin.vim.git'
-Plug 'tyru/caw.vim'
-Plug 'mattn/emmet-vim'
+ "dashboard
+ Plug 'glepnir/dashboard-nvim'
 
-call plug#end()
-let g:lightline = {
-      \ 'colorscheme': 'darcula',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-colorscheme dracula
+ call plug#end()
+ let g:lightline = {
+       \ 'colorscheme': 'darcula',
+       \ 'active': {
+       \   'left': [ [ 'mode', 'paste' ],
+       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+       \ },
+       \ 'component_function': {
+       \   'filename': 'LightlineFilename',
+       \   'cocstatus': 'coc#status'
+       \ },
+       \ }
+ colorscheme dracula
 
-" numbers
-set relativenumber " Relative line numbers
-set number
+ " numbers
+ set relativenumber " Relative line numbers
+ set number
 
-set showcmd " Show (partial) command in status line.
-set mouse=a " mouse usage
+ set mouse=a " mouse usage
+ set clipboard=unnamedplus
+ set encoding=UTF-8

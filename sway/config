@@ -20,6 +20,7 @@ assign [title="Sublime Text"] workspace 3:editor
 assign [title="VSCodium"] workspace 3:editor
 assign [class="code-oss"] workspace 3:editor
 assign [app_id="qtcreator"] workspace 3:editor
+assign [class="^Code$"] workspace 3:editor
 assign [class="Thunderbird"] workspace 4:mail
 assign [class="^discord$"] workspace 5:discord
 
@@ -262,7 +263,7 @@ bindsym Print exec $screenshot
 
 # autoload
 #exec thunderbird
-exec waterfox-current
+exec firefox
 exec alacritty
 
 include /etc/sway/config.d/*
