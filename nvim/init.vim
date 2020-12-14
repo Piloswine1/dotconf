@@ -4,7 +4,7 @@
  Plug 'neoclide/coc.nvim', {'branch': 'release'}
  Plug 'dracula/vim', { 'as': 'dracula' }
  Plug 'itchyny/lightline.vim'
- Plug 'ludovicchabant/vim-gutentags'
+ "Plug 'ludovicchabant/vim-gutentags'
  Plug 'rstacruz/vim-closer'
 
  "clap
@@ -46,6 +46,11 @@
  set relativenumber " Relative line numbers
  set number
 
- set mouse=a " mouse usage
+ "set mouse=a " mouse usage
  set clipboard=unnamedplus
+ set guifont=Fira\ Code:h15
  set encoding=UTF-8
+
+ "nerdTree maps
+ "autocmd vimenter * NERDTree
+ map <C-b> :NERDTreeToggle<CR>
