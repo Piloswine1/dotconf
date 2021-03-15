@@ -10,7 +10,8 @@ path = [
     "/home/pilo/.cargo/bin", 
     "/home/pilo/.deno/bin",
     "/home/pilo/.config/yarn/global/node_modules/.bin",
-    "/home/pilo/.yarn/bin"
+    "/home/pilo/.yarn/bin",
+    "/home/pilo/.local/bin"
     ]
 prompt = "echo $(starship prompt)"
 skip_welcome_message = true
