@@ -1,0 +1,68 @@
+completion_mode = "circular"
+path = [
+    "", 
+    "/usr/local/sbin", 
+    "/usr/local/bin", 
+    "/usr/bin", 
+    "/usr/bin/site_perl", 
+    "/usr/bin/vendor_perl", 
+    "/usr/bin/core_perl", 
+    "/home/pilo/.cargo/bin", 
+    "/home/pilo/.deno/bin",
+    "/home/pilo/.config/yarn/global/node_modules/.bin",
+    "/home/pilo/.yarn/bin",
+    "/home/pilo/.local/bin"
+    ]
+prompt = "echo $(starship prompt)"
+skip_welcome_message = true
+
+[color_config]
+primitive_int = "green"
+primitive_decimal = "red"
+primitive_filesize = "ur"
+primitive_string = "pb"
+primitive_line = "yellow"
+primitive_columnpath = "cyan"
+primitive_pattern = "white"
+primitive_boolean = "green"
+primitive_date = "ru"
+primitive_duration = "blue"
+primitive_range = "purple"
+primitive_path = "yellow"
+primitive_binary = "cyan"
+separator_color = "purple"
+header_align = "c" # left|l, right|r, center|c
+header_color = "c" # green|g, red|r, blue|u, black|b, yellow|y, purple|p, cyan|c, white|w
+header_bold = true
+index_color = "rd"
+
+[env]
+ALACRITTY_LOG = "/tmp/Alacritty-897.log"
+COLORTERM = "truecolor"
+DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus"
+DENO_INSTALL = "/home/pilo/.deno"
+DESKTOP_SESSION = "/usr/share/wayland-sessions/sway"
+DISPLAY = ":1"
+HOME = "/home/pilo"
+LANG = "en_US.UTF-8"
+LOGNAME = "pilo"
+MAIL = "/var/spool/mail/pilo"
+PWD = "/home/pilo"
+SHELL = "/bin/bash"
+SHLVL = "1"
+STARSHIP_SHELL = ""
+USER = "pilo"
+WAYLAND_DISPLAY = "wayland-0"
+XCURSOR_SIZE = "24"
+XDG_CURRENT_DESKTOP = ""
+XDG_DATA_DIRS = "/home/pilo/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+XDG_RUNTIME_DIR = "/run/user/1000"
+XDG_SEAT = "seat0"
+XDG_SEAT_PATH = "/org/freedesktop/DisplayManager/Seat0"
+XDG_SESSION_CLASS = "user"
+XDG_SESSION_DESKTOP = ""
+XDG_SESSION_ID = "2"
+XDG_SESSION_PATH = "/org/freedesktop/DisplayManager/Session1"
+XDG_SESSION_TYPE = "wayland"
+XDG_VTNR = "2"
+_ = "/usr/bin/nu"

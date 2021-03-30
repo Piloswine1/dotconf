@@ -1,0 +1,141 @@
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+@keyframes blink-warning {
+  70% {
+    color: white;
+  }
+  to {
+    color: white;
+    background-color: #f1fa8c;
+  }
+}
+@keyframes blink-critical {
+  70% {
+    color: white;
+  }
+  to {
+    color: white;
+    background-color: #FF5555;
+  }
+}
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+/* Reset all styles */
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+/* The whole bar */
+#waybar {
+  background: rgba(34, 34, 34, 0.8);
+  color: #f8f8f2;
+  font-family: Cantarell, Noto Sans, FiraCode;
+  font-size: 10px;
+  font-weight: bold;
+}
+/* Each module */
+#clock,
+#cpu,
+#custom-keyboard-layout,
+#memory,
+#mode,
+#network,
+#battery,
+#pulseaudio,
+#temperature,
+#tray {
+  margin: 0px 10px 0px 0px;
+}
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+#clock {
+  /*padding: 0 3px;*/
+  font-weight: bold;
+  border-bottom: 2px solid #50fa7b;
+}
+#cpu {
+  /* No styles */
+}
+#cpu.warning {
+  color: #f1fa8c;
+}
+#cpu.critical {
+  color: #FF5555;
+}
+#memory {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#memory.warning {
+  color: #f1fa8c;
+}
+#memory.critical {
+  color: #FF5555;
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+#network {
+  /* No styles */
+}
+#network.disconnected {
+  color: #f1fa8c;
+}
+#pulseaudio {
+  /* No styles */
+}
+#pulseaudio.muted {
+  /* No styles */
+}
+/*#custom-spotify {
+    color: @drack_green;
+}*/
+#temperature {
+  /* No styles */
+}
+#temperature.critical {
+  color: #FF5555;
+}
+#tray {
+  /* No styles */
+}
+#window {
+  color: #f8f8f2;
+  font-weight: bold;
+  border-bottom: 2px solid #f1fa8c;
+}
+#workspaces button {
+  padding: 5px;
+  color: #f8f8f2;
+  margin: 1px;
+}
+#workspaces button:hover {
+  background: #bd93f9;
+  color: #f8f8f2;
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+#workspaces button.focused {
+  padding: 5px;
+  background: #44475A;
+  color: #f8f8f2;
+  margin: 1px;
+  border-bottom: 2px solid #bd93f9;
+}
+#workspaces button.urgent {
+  background: #FF5555;
+  color: #f8f8f2;
+}

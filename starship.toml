@@ -1,0 +1,87 @@
+[battery]
+disabled = false
+full_symbol = ""
+charging_symbol = ""
+discharging_symbol = ""
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+disabled = false
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[✖](bold red)"
+vicmd_symbol = "[❮](bold green)"
+
+[git_branch]
+format = "[on](bold) [$symbol$branch]($style) "
+symbol = " "
+style =	"bold purple"
+
+[package]
+format = "[pkg](bold) [$symbol$version]($style) "
+symbol = " "
+display_private = true
+
+# [username]
+# disabled = true
+# show_always = true
+
+# [hostname]
+# ssh_only = true
+# prefix = "⟪"
+# suffix = "⟫"
+# disabled = false
+
+[aws]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[docker]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+format = "[via](bold) [$symbol$version]($style) "
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+format = "[via](bold) [$symbol$version]($style) "
+symbol = " "
