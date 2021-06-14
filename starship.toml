@@ -39,8 +39,11 @@ symbol = " "
 [conda]
 symbol = " "
 
-[docker]
+[docker_context]
 symbol = " "
+
+[deno]
+format = " "
 
 [elixir]
 symbol = " "
@@ -51,8 +54,8 @@ symbol = " "
 [golang]
 symbol = " "
 
-[haskell]
-symbol = " "
+# [haskell]
+# symbol = " "
 
 [hg_branch]
 symbol = " "
