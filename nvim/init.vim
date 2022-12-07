@@ -7,6 +7,7 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'godlygeek/tabular'
+Plug 'nvim-lua/plenary.nvim'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
@@ -40,6 +41,8 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'p00f/clangd_extensions.nvim'
 Plug 'sigmasd/deno-nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'LhKipp/nvim-nu', {'do': ':TSInstall nu'}
 
 " filetype
 Plug 'mechatroner/rainbow_csv'
@@ -162,9 +165,9 @@ require'indent_blankline'.setup {
     show_end_of_line = true,
 }
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require'cmp_nvim_lsp'.default_capabilities()
 
-nvim_lsp.gopls.setup{
+nvim_lsp.gopls.setup {
   on_attach = on_attach
 }
 
@@ -217,6 +220,18 @@ nvim_lsp.jsonls.setup {
   capabilities = capabilities,
 }
 
+--local null_ls = require'null-ls'
+--
+--null_ls.setup({
+--    sources = {
+--        null_ls.builtins.formatting.stylua,
+--        null_ls.builtins.diagnostics.eslint,
+--        null_ls.builtins.completion.spell,
+--    },
+--})
+
+require'nu'.setup {}
+
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = { "cpp", "rust", "toml", "javascript", "typescript", "json", "go", "bash" },
 	sync_install = false,
@@ -238,7 +253,9 @@ require'nnn'.setup {
   	  { "<C-y>", builtin.copy_to_clipboard }, -- copy file(s) to clipboard
   	  { "<C-w>", builtin.cd_to_path },        -- cd to file directory
   	  { "<C-e>", builtin.populate_cmdline },  -- populate cmdline (:) with file(s)
-  	}
+  	},
+	auto_close = false,
+	replace_netrw = "explorer",
 }
 
 require'nvim-web-devicons'.setup {
@@ -299,7 +316,7 @@ set diffopt+=indent-heuristic
 " ; as :
 nnoremap ; :
 
-noremap <C-b> :NnnExplorer<CR>
+noremap <C-A-b> :NnnExplorer<CR>
 map <C-p> :Files<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg

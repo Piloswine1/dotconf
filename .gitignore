@@ -8,3 +8,5 @@ yarn
 nnn
 nushell
 htop
+bottom
+.fzf.bash
