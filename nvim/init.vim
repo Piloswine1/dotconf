@@ -11,7 +11,7 @@ Plug 'nvim-lua/plenary.nvim'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
+" Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -43,6 +43,7 @@ Plug 'p00f/clangd_extensions.nvim'
 Plug 'sigmasd/deno-nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'LhKipp/nvim-nu', {'do': ':TSInstall nu'}
+Plug 'jose-elias-alvarez/typescript.nvim'
 
 " filetype
 Plug 'mechatroner/rainbow_csv'
@@ -65,7 +66,6 @@ set termguicolors
 set background=dark
 
 colorscheme tokyonight-storm
-let g:lightline = {'colorscheme': 'tokyonight'}
 
 syntax on
 
@@ -214,6 +214,13 @@ require'deno-nvim'.setup {
     -- }
   },
 }
+require"typescript".setup{
+    server = {
+		on_attach = on_attach,
+  		capabilities = capabilities,
+		root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
+    },
+}
 
 nvim_lsp.jsonls.setup {
   on_attach = on_attach,
@@ -262,9 +269,35 @@ require'nvim-web-devicons'.setup {
 	color_icons = true;
  	default = true;
 }
-require'bufferline'.setup{}
+
+require'bufferline'.setup {
+	options = {
+        mode = "tabs",
+	}
+}
 
 END
+
+" Lightline
+let g:lightline = {
+	  \ 'colorscheme': 'tokyonight',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileencoding', 'filetype' ] ],
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename'
+      \ },
+      \ 'enable': {
+      \   'tabline': 0
+      \ },
+      \ }
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 
 " =============================================================================
 " # Editor settings
@@ -298,6 +331,7 @@ set ttyfast
 set lazyredraw
 set showcmd " Show (partial) comand in status line.m
 set mouse=a " Enable mouse usage (all modes) in terminals
+au TextYankPost * silent! lua vim.highlight.on_yank() -- Highlight yank
 
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
