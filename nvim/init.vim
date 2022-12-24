@@ -9,6 +9,13 @@ Plug 'justinmk/vim-sneak'
 Plug 'godlygeek/tabular'
 Plug 'nvim-lua/plenary.nvim'
 
+" Copilot
+Plug 'github/copilot.vim'
+
+" Utils
+Plug 'Piloswine1/carbon-now.nvim', { 'branch': 'main'}
+Plug 'folke/zen-mode.nvim'
+
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 " Plug 'machakann/vim-highlightedyank'
@@ -16,8 +23,10 @@ Plug 'andymass/vim-matchup'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'luukvbaal/nnn.nvim'
+" Plug 'luukvbaal/nnn.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'onsails/lspkind.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
 
 " Fuzzy finder
@@ -32,6 +41,9 @@ Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
 Plug 'hrsh7th/cmp-path', {'branch': 'main'}
 Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
 Plug 'ray-x/lsp_signature.nvim'
+
+" Inlay hints
+" Plug 'lvimuser/lsp-inlayhints.nvim'
 
 " Only because nvim-cmp _requires_ snippets
 Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
@@ -127,8 +139,11 @@ local on_attach = function(client, bufnr)
       border = "none"
     },
   })
+
+  --require'lsp-inlayhints'.on_attach(client, bufnr)
 end
 
+local lspkind = require'lspkind'
 cmp.setup({
   snippet = {
     -- REQUIRED by nvim-cmp. get rid of it once we can
@@ -152,6 +167,30 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
+  enabled = function()
+    -- disable completion in comments
+    local context = require 'cmp.config.context'
+    -- keep command mode completion enabled when cursor is in a comment
+    if vim.api.nvim_get_mode().mode == 'c' then
+      return true
+    else
+      return not context.in_treesitter_capture("comment") 
+        and not context.in_syntax_group("Comment")
+    end
+  end,
+  formatting = {
+    format = function(entry, vim_item)
+      if vim.tbl_contains({ 'path' }, entry.source.name) then
+        local icon, hl_group = require'nvim-web-devicons'.get_icon(entry:get_completion_item().label)
+        if icon then
+          vim_item.kind = icon
+          vim_item.kind_hl_group = hl_group
+          return vim_item
+        end
+      end
+      return lspkind.cmp_format({ with_text = false })(entry, vim_item)
+    end
+  }
 })
 
 -- Enable completing paths in :
@@ -168,20 +207,29 @@ require'indent_blankline'.setup {
 local capabilities = require'cmp_nvim_lsp'.default_capabilities()
 
 nvim_lsp.gopls.setup {
-  on_attach = on_attach
+  on_attach = on_attach,
 }
+-- nvim_lsp.bufls.setup {}
 
 require'clangd_extensions'.setup {
   server = {
     on_attach = on_attach,
-    capabilites = capabilities
-  }
+    capabilites = capabilities,
+  },
+  --extensions = {
+  --  autoSetHints = false,
+  --}
 }
 require'rust-tools'.setup {
   server = {
     on_attach = on_attach,
-    capabilites = capabilities
-  }
+    capabilites = capabilities,
+  },
+  --tools = {
+  --  inlay_hints = {
+  --  	auto = false
+  --  }
+  --}
 }
 require'deno-nvim'.setup {
   server = {
@@ -214,13 +262,15 @@ require'deno-nvim'.setup {
     -- }
   },
 }
-require"typescript".setup{
+
+require'typescript'.setup{
     server = {
 		on_attach = on_attach,
   		capabilities = capabilities,
 		root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json")
     },
 }
+nvim_lsp.tailwindcss.setup{}
 
 nvim_lsp.jsonls.setup {
   on_attach = on_attach,
@@ -250,31 +300,49 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require'gitsigns'.setup {}
-local builtin = require'nnn'.builtin
-require'nnn'.setup {
-	mappings = {
-	  { "<C-t>", builtin.open_in_tab },       -- open file(s) in tab
-  	  { "<C-s>", builtin.open_in_split },     -- open file(s) in split
-  	  { "<C-v>", builtin.open_in_vsplit },    -- open file(s) in vertical split
-  	  { "<C-p>", builtin.open_in_preview },   -- open file in preview split keeping nnn focused
-  	  { "<C-y>", builtin.copy_to_clipboard }, -- copy file(s) to clipboard
-  	  { "<C-w>", builtin.cd_to_path },        -- cd to file directory
-  	  { "<C-e>", builtin.populate_cmdline },  -- populate cmdline (:) with file(s)
-  	},
-	auto_close = false,
-	replace_netrw = "explorer",
-}
+
+-- local builtin = require'nnn'.builtin
+-- require'nnn'.setup {
+-- 	mappings = {
+-- 	  { "<C-t>", builtin.open_in_tab },       -- open file(s) in tab
+--   	  { "<C-s>", builtin.open_in_split },     -- open file(s) in split
+--   	  { "<C-v>", builtin.open_in_vsplit },    -- open file(s) in vertical split
+--   	  { "<C-p>", builtin.open_in_preview },   -- open file in preview split keeping nnn focused
+--   	  { "<C-y>", builtin.copy_to_clipboard }, -- copy file(s) to clipboard
+--   	  { "<C-w>", builtin.cd_to_path },        -- cd to file directory
+--   	  { "<C-e>", builtin.populate_cmdline },  -- populate cmdline (:) with file(s)
+--   	},
+-- 	auto_close = false,
+-- 	replace_netrw = "explorer",
+-- }
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 require'nvim-web-devicons'.setup {
 	color_icons = true;
  	default = true;
 }
 
+require'nvim-tree'.setup {}
+
 require'bufferline'.setup {
 	options = {
         mode = "tabs",
 	}
 }
+
+require'carbon-now'.setup({
+	open_cmd = "/mnt/c/Program\\ Files/Waterfox/waterfox.exe",
+	options = {
+		theme = "shades-of-purple",
+  	  	window_theme = "none",
+  	  	font_family = "Fira Code",
+  	}
+})
+
+-- Zen mode
+require'zen-mode'.setup {}
 
 END
 
@@ -350,7 +418,7 @@ set diffopt+=indent-heuristic
 " ; as :
 nnoremap ; :
 
-noremap <C-A-b> :NnnExplorer<CR>
+noremap <C-A-b> :NvimTreeToggle<CR>
 map <C-p> :Files<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg
