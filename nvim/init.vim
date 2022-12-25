@@ -8,16 +8,18 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'godlygeek/tabular'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
 
 " Copilot
 Plug 'github/copilot.vim'
 
 " Utils
-Plug 'Piloswine1/carbon-now.nvim', { 'branch': 'main'}
+" Plug 'Piloswine1/carbon-now.nvim', { 'branch': 'main'}
 Plug 'folke/zen-mode.nvim'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
+Plug 'folke/todo-comments.nvim'
 " Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -25,7 +27,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lewis6991/gitsigns.nvim'
 " Plug 'luukvbaal/nnn.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-tree.lua'
+" Neo tree
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 Plug 'onsails/lspkind.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
 
@@ -74,6 +78,25 @@ if has('nvim')
     set inccommand=nosplit
 end
 
+lua << END
+-- FIX: underlines instead of undercurls
+-- see: https://github.com/microsoft/terminal/issues/7228
+require'tokyonight'.setup {
+	on_highlights = function(hl, c)
+		hl.DiagnosticUnderlineError = { italic = true, fg = c.error, sp = c.error }
+   		hl.DiagnosticUnderlineWarn  = { italic = true, fg = c.warning, sp = c.warning }
+   		hl.DiagnosticUnderlineInfo  = { italic = true, fg = c.info, sp = c.info }
+   		hl.DiagnosticUnderlineHint  = { italic = true, fg = c.hint, sp = c.hint }
+
+		hl.SpellBad   = {fg = c.error, sp = c.error, italic = true }
+		hl.SpellCap   = {fg = c.warning, sp = c.warning, italic= true }
+   		hl.SpellLocal = {fg = c.info, sp = c.info, italic = true }
+   		hl.SpellRare  = {fg = c.hint, sp = c.hint, italic = true }
+	end,
+}
+
+END
+
 set termguicolors
 set background=dark
 
@@ -105,6 +128,30 @@ endif
 lua << END
 local cmp = require'cmp'
 local nvim_lsp = require'lspconfig'
+
+-- Diagnostics
+
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+
+vim.diagnostic.config({
+  underline = true,
+  update_in_insert = false,
+  virtual_text = { spacing = 4, prefix = "" },
+  severity_sort = true,
+})
+
+vim.lsp.handlers["workspace/diagnostic/refresh"] = function(_, _, ctx)
+  local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
+  pcall(vim.diagnostic.reset, ns)
+  return true
+end
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+-- END Diagnostics
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -205,6 +252,7 @@ require'indent_blankline'.setup {
 }
 
 local capabilities = require'cmp_nvim_lsp'.default_capabilities()
+--capabilities.offsetEncoding = { "utf-16" }
 
 nvim_lsp.gopls.setup {
   on_attach = on_attach,
@@ -324,22 +372,62 @@ require'nvim-web-devicons'.setup {
  	default = true;
 }
 
-require'nvim-tree'.setup {}
+require'todo-comments'.setup {}
+
+-- require'nvim-tree'.setup {}
+require'neo-tree'.setup {
+  filesystem = {
+    follow_current_file = true,
+    hijack_netrw_behavior = "open_current",
+  },
+}
+
+signs = {
+  error = signs.Error,
+  warning = signs.Warn,
+  info = signs.Info,
+  hint = signs.Hint,
+}
+
+local severities = {
+  "error",
+  "warning",
+  -- "info",
+  -- "hint",
+}
 
 require'bufferline'.setup {
 	options = {
         mode = "tabs",
+		diagnostics = "nvim_lsp",
+		diagnostics_indicator = function(_, _, diag)
+		  local s = {}
+     	  for _, severity in ipairs(severities) do
+     	    if diag[severity] then
+     	      table.insert(s, signs[severity] .. diag[severity])
+     	    end
+     	  end
+     	  return table.concat(s, " ")
+     	end,
+		offsets = {
+     	  {
+     	    filetype = "neo-tree",
+     	    text = "Neo Tree",
+     	    highlight = "Directory",
+     	    text_align = "left",
+     	  },
+     	},
 	}
 }
 
-require'carbon-now'.setup({
-	open_cmd = "/mnt/c/Program\\ Files/Waterfox/waterfox.exe",
-	options = {
-		theme = "shades-of-purple",
-  	  	window_theme = "none",
-  	  	font_family = "Fira Code",
-  	}
-})
+--require'carbon-now'.setup({
+--	open_cmd = "/mnt/c/Program\\ Files/Waterfox/waterfox.exe",
+--	options = {
+--		theme = "shades-of-purple",
+--  	  	window_theme = "none",
+--  	  	font_family = "Fira Code",
+--  	}
+--})
 
 -- Zen mode
 require'zen-mode'.setup {}
@@ -418,7 +506,7 @@ set diffopt+=indent-heuristic
 " ; as :
 nnoremap ; :
 
-noremap <C-A-b> :NvimTreeToggle<CR>
+noremap <C-A-b> :NeoTreeShowToggle<CR>
 map <C-p> :Files<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg
