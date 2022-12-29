@@ -20,6 +20,8 @@ Plug 'folke/zen-mode.nvim'
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'folke/todo-comments.nvim'
+Plug 'glepnir/dashboard-nvim'
+Plug 'petertriho/nvim-scrollbar'
 " Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -28,6 +30,7 @@ Plug 'lewis6991/gitsigns.nvim'
 " Plug 'luukvbaal/nnn.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'nvim-tree/nvim-tree.lua'
+Plug 'folke/trouble.nvim'
 " Neo tree
 Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 Plug 'onsails/lspkind.nvim'
@@ -37,6 +40,9 @@ Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" GIT
+Plug 'TimUntersberger/neogit'
 
 " Semantic language support
 Plug 'neovim/nvim-lspconfig'
@@ -129,6 +135,63 @@ lua << END
 local cmp = require'cmp'
 local nvim_lsp = require'lspconfig'
 
+-- Dashboard
+
+local home = os.getenv('HOME')
+local db = require'dashboard'
+
+db.preview_file_height = 11
+db.preview_file_width = 70
+db.custom_center = {
+    {icon = '  ',
+    desc = 'Recently latest session                  ',
+    shortcut = 'SPC s l',
+    action ='SessionLoad'},
+    {icon = '  ',
+    desc = 'Recently opened files                   ',
+    action =  'DashboardFindHistory',
+    shortcut = 'SPC f h'},
+    {icon = '  ',
+    desc = 'Find  File                              ',
+    action = 'Files',
+    shortcut = 'SPC f f'},
+    {icon = '  ',
+    desc ='File Browser                            ',
+    action =  'NeoTreeFloat',
+    shortcut = 'SPC f b'},
+    {icon = '  ',
+    desc = 'Find  word                              ',
+    action = 'Rg',
+    shortcut = 'SPC f w'},
+    {icon = '  ',
+    desc = 'Open Nvim configs                       ',
+    action = 'e ' .. home ..'/.config/nvim/init.vim',
+    shortcut = 'SPC f d'},
+}
+
+-- End Dashboard
+
+require'gitsigns'.setup {}
+
+local colors = require'tokyonight.colors'.setup {}
+
+require'neogit'.setup {}
+require'scrollbar'.setup {
+    handle = {
+        color = colors.bg_highlight,
+    },
+    marks = {
+        Search = { color = colors.orange },
+        Error = { color = colors.error },
+        Warn = { color = colors.warning },
+        Info = { color = colors.info },
+        Hint = { color = colors.hint },
+        Misc = { color = colors.purple },
+    }
+}
+require'scrollbar.handlers.gitsigns'.setup {}
+require'scrollbar.handlers.search'.setup {}
+
 -- Diagnostics
 
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
@@ -198,6 +261,18 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
+  sorting = {
+    comparators = {
+        cmp.config.compare.offset,
+        cmp.config.compare.exact,
+        cmp.config.compare.recently_used,
+        require'clangd_extensions.cmp_scores',
+        cmp.config.compare.kind,
+        cmp.config.compare.sort_text,
+        cmp.config.compare.length,
+        cmp.config.compare.order,
+    },
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -248,6 +323,7 @@ cmp.setup.cmdline(':', {
 })
 
 require'indent_blankline'.setup {
+	filetype_exclude = { "dashboard" },
     show_end_of_line = true,
 }
 
@@ -347,8 +423,6 @@ require'nvim-treesitter.configs'.setup {
 	}
 }
 
-require'gitsigns'.setup {}
-
 -- local builtin = require'nnn'.builtin
 -- require'nnn'.setup {
 -- 	mappings = {
@@ -374,12 +448,17 @@ require'nvim-web-devicons'.setup {
 
 require'todo-comments'.setup {}
 
+require'trouble'.setup {}
+
 -- require'nvim-tree'.setup {}
 require'neo-tree'.setup {
-  filesystem = {
-    follow_current_file = true,
-    hijack_netrw_behavior = "open_current",
-  },
+	window = {
+		width = 30,
+	},
+	filesystem = {
+		follow_current_file = true,
+  	  	hijack_netrw_behavior = "open_current",
+  	},
 }
 
 signs = {
