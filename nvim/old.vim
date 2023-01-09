@@ -84,6 +84,11 @@ if has('nvim')
     set inccommand=nosplit
 end
 
+" Copilot disable on cpp
+let g:copilot_filetypes = {
+    \ 'cpp': v:false,
+    \ }
+
 lua << END
 -- FIX: underlines instead of undercurls
 -- see: https://github.com/microsoft/terminal/issues/7228
@@ -142,6 +147,8 @@ local db = require'dashboard'
 
 db.preview_file_height = 11
 db.preview_file_width = 70
+db.session_directory = home .. '/.local/nvim-sessions'
+db.session_auto_save_on_exit = true
 db.custom_center = {
     {icon = '  ',
     desc = 'Recently latest session                  ',
@@ -399,6 +406,42 @@ nvim_lsp.tailwindcss.setup{}
 nvim_lsp.jsonls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+}
+
+nvim_lsp.sumneko_lua.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			runtime = {
+			    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+			    version = "LuaJIT",
+			    -- Setup your lua path
+			    path = vim.split(package.path, ";"),
+				builtin = {
+					os = "disable",
+					io = "disable",
+				},
+			},
+			diagnostics = {
+			    -- Get the language server to recognize the `vim` global
+			    globals = { },
+			},
+			workspace = {
+			    -- Make the server aware of Neovim runtime files
+			    -- library = vim.api.nvim_get_runtime_file("", true),
+				maxPreload = 2000,
+				preloadFileSize = 1000,
+				library = {
+					"/home/pilo/.local/lua-lsp/libs/CC-Tweaked-EmmyLua"
+				}
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+			    enable = false,
+			},
+		},
+	},
 }
 
 --local null_ls = require'null-ls'
