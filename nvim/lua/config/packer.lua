@@ -84,6 +84,17 @@ return require('packer').startup(function(use)
 	-- use 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 	use 'onsails/lspkind.nvim'
 	use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
+	use({
+		"utilyre/barbecue.nvim",
+		requires = {
+			"neovim/nvim-lspconfig",
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons", -- optional dependency
+		},
+		config = function()
+			require 'barbecue'.setup()
+		end,
+	})
 
 	-- GIT
 	use 'TimUntersberger/neogit'
