@@ -41,6 +41,7 @@ return require('packer').startup(function(use)
 	use 'nvim-lua/plenary.nvim'
 	use 'MunifTanjim/nui.nvim'
 	use 'm4xshen/autoclose.nvim'
+	use 'windwp/nvim-spectre'
 
 	use 'folke/zen-mode.nvim'
 
