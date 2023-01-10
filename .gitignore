@@ -12,3 +12,4 @@ bottom
 .fzf.bash
 bash_completion.d/
 github-copilot/
+helix/runtime

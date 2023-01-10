@@ -1,0 +1,5 @@
+theme = "tokyonight-storm"
+
+[editor]
+line-number = "relative"
+bufferline = "multiple"

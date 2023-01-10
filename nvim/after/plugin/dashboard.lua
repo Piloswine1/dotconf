@@ -30,7 +30,7 @@ db.custom_center = {
 		shortcut = 'SPC f w' },
 	{ icon = '  ',
 		desc = 'Open Nvim configs                       ',
-		action = 'Neotree float ' .. home .. '/.config/nvim/init.lua',
+		action = 'Neotree float ' .. home .. '/.config/nvim',
 		shortcut = 'SPC f d' },
 }
 -- End dashboard
