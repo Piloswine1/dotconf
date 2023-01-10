@@ -1,8 +1,8 @@
 vim.cmd('filetype plugin indent on')
 vim.opt.autoindent = true
-vim.opt.noshowmode = true
-vim.opt.nowrap = true
+vim.opt.showmode = false
 vim.opt.printencoding = 'utf-8'
+vim.opt.scrolloff = 8
 -- vim.opt.signcolumn=yes
 
 -- Sane splits
@@ -13,4 +13,12 @@ vim.opt.splitbelow = true
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
-vim.opt.noexpandtab = true
+vim.opt.expandtab = false
+
+vim.opt.wrap = false
+
+-- Edit history
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true

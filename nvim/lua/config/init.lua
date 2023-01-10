@@ -1,7 +1,6 @@
 require("config.colors")
 require("config.keymaps")
+require("config.editor")
 require("config.ui")
 require("config.utils")
 require("config.plugins")
-require("config.plugins.cmp")
-require("config.lsp")

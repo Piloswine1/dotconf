@@ -8,6 +8,7 @@ set vb t_vb= " No more beeps
 set nofoldenable
 ]])
 
+vim.opt.scrolloff = 8
 vim.opt.ttyfast = true
 -- https://github.com/vim/vim/issues/1735#issuecomment-383353563
 vim.opt.lazyredraw = true
@@ -19,8 +20,8 @@ vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank()') -- Highlight ya
 -- Verbose: vim.opt.listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 vim.opt.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
 
-vim.opt.relativenumber = true -- Relative line numbers
 vim.opt.number = true -- Also show current absolute line
+vim.opt.relativenumber = true -- Relative line numbers
 
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
 vim.opt.diffopt:append('algorithm:patience')

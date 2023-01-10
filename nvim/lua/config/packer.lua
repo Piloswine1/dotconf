@@ -32,6 +32,9 @@ return require('packer').startup(function(use)
 		end,
 	}
 
+	-- Utils: git, close, motion, etc...
+	use 'tpope/vim-fugitive'
+	use 'mbbill/undotree'
 	use 'editorconfig/editorconfig-vim'
 	use 'justinmk/vim-sneak'
 	use 'godlygeek/tabular'
