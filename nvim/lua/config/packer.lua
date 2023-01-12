@@ -40,11 +40,30 @@ return require('packer').startup(function(use)
 	use 'godlygeek/tabular'
 	use 'nvim-lua/plenary.nvim'
 	use 'MunifTanjim/nui.nvim'
-	use 'm4xshen/autoclose.nvim'
+	-- use 'm4xshen/autoclose.nvim'
+	use {
+		"windwp/nvim-autopairs",
+		config = function() require("nvim-autopairs").setup {} end
+	}
 	use 'windwp/nvim-spectre'
+	use {
+		'stevearc/overseer.nvim',
+		config = function() require 'overseer'.setup() end
+	}
+	use 'monaqa/dial.nvim'
 
 	use 'folke/zen-mode.nvim'
-
+	--use {
+	--	"Pocco81/true-zen.nvim",
+	--	config = function()
+	--		require("true-zen").setup {
+	--			integrations = {
+	--				tmux = true, -- hide tmux status bar in (minimalist, ataraxis)
+	--				lualine = true -- hide nvim-lualine (ataraxis)
+	--			},
+	--		}
+	--	end,
+	--}
 	-- Theme
 	use 'folke/tokyonight.nvim'
 
@@ -52,7 +71,7 @@ return require('packer').startup(function(use)
 	use 'airblade/vim-rooter'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.0',
-		-- or                            , branch = '0.1.x',
+		-- or, branch = '0.1.x',
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
 
@@ -96,6 +115,12 @@ return require('packer').startup(function(use)
 			require 'barbecue'.setup()
 		end,
 	})
+	use {
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require 'inc_rename'.setup()
+		end,
+	}
 	-- Lua
 	use {
 		"folke/which-key.nvim",

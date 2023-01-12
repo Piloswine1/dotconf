@@ -12,9 +12,16 @@ vim.opt.scrolloff = 8
 vim.opt.ttyfast = true
 -- https://github.com/vim/vim/issues/1735#issuecomment-383353563
 vim.opt.lazyredraw = true
+vim.opt.synmaxcol = 500
 vim.opt.showcmd = true -- Show (partial) comand in status line.m
 vim.opt.mouse = 'a' -- Enable mouse usage (all modes) in terminals
-vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank()') -- Highlight yank
+
+vim.cmd([[
+au TextYankPost * silent! lua vim.highlight.on_yank()
+" Decent wildmenu
+set wildmenu
+set wildmode=list:longest
+]]) -- Highlight yank
 
 -- Show those damn hidden characters
 -- Verbose: vim.opt.listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
@@ -24,5 +31,9 @@ vim.opt.number = true -- Also show current absolute line
 vim.opt.relativenumber = true -- Relative line numbers
 
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
+vim.opt.diffopt:append('iwhite')
 vim.opt.diffopt:append('algorithm:patience')
 vim.opt.diffopt:append('indent-heuristic')
+
+vim.opt.colorcolumn = "80"
+vim.opt.updatetime = 300

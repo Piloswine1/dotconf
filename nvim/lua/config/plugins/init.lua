@@ -1,4 +1,4 @@
-require 'autoclose'.setup {}
+--require 'autoclose'.setup {}
 require 'neogit'.setup {}
 require 'gitsigns'.setup {}
 require 'todo-comments'.setup {}
@@ -6,7 +6,8 @@ require 'trouble'.setup {}
 
 require 'indent_blankline'.setup {
 	filetype_exclude = { "dashboard" },
-	show_end_of_line = true,
+	show_end_of_line = false,
+	-- show_current_context = true,
 }
 
 vim.g.loaded_netrw = 1
