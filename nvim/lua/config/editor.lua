@@ -47,5 +47,5 @@ if has("autocmd")
 endif
 ]])
 
--- Too wild swtich case ident
+-- Too wild switch case ident
 vim.opt.cinoptions= "l1"

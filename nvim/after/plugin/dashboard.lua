@@ -5,13 +5,12 @@ local telescope = require 'telescope.builtin'
 
 db.preview_file_height = 11
 db.preview_file_width = 70
-db.session_directory = home .. '/.local/nvim-sessions'
-db.session_auto_save_on_exit = true
+db.session_auto_save_on_exit = false
 db.custom_center = {
 	{ icon = '  ',
 		desc = 'Recently latest session                  ',
 		shortcut = 'SPC s l',
-		action = 'SessionLoad' },
+		action = 'Telescope persisted' },
 	{ icon = '  ',
 		desc = 'Recently opened files                   ',
 		action = telescope.oldfiles,

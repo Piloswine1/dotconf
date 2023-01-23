@@ -15,6 +15,8 @@ return require('packer').startup(function(use)
 		config = function()
 			vim.defer_fn(function()
 				require 'copilot'.setup {
+					suggestion = { enabled = false },
+					panel = { enabled = false },
 					filetypes = {
 						cpp = false,
 						yaml = false,
@@ -31,6 +33,30 @@ return require('packer').startup(function(use)
 			end, 100)
 		end,
 	}
+	use {
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require 'copilot_cmp'.setup()
+		end
+	}
+
+	-- Session manager
+	use {
+		"olimorris/persisted.nvim",
+		--module = "persisted", -- For lazy loading
+		config = function()
+			require("persisted").setup({
+				save_dir = os.getenv("HOME") .. "/.vim/sessions/",
+				use_git_branch = true,
+				autoload = true,
+				on_autoload_no_session = function()
+					vim.notify("No existing session to load.")
+				end
+			})
+			require("telescope").load_extension("persisted") -- To load the telescope extension
+		end,
+	}
 
 	-- Utils: git, close, motion, etc...
 	use 'tpope/vim-fugitive'
@@ -45,6 +71,7 @@ return require('packer').startup(function(use)
 		"windwp/nvim-autopairs",
 		config = function() require("nvim-autopairs").setup {} end
 	}
+	use "windwp/nvim-ts-autotag"
 	use 'windwp/nvim-spectre'
 	use {
 		'stevearc/overseer.nvim',
@@ -53,6 +80,7 @@ return require('packer').startup(function(use)
 	use 'monaqa/dial.nvim'
 
 	use 'folke/zen-mode.nvim'
+	use 'xiyaowong/virtcolumn.nvim'
 	--use {
 	--	"Pocco81/true-zen.nvim",
 	--	config = function()
@@ -115,12 +143,15 @@ return require('packer').startup(function(use)
 			require 'barbecue'.setup()
 		end,
 	})
+
 	use {
-		"smjonas/inc-rename.nvim",
+		'j-hui/fidget.nvim',
 		config = function()
-			require 'inc_rename'.setup()
-		end,
+			require 'fidget'.setup {}
+		end
 	}
+	use "smjonas/inc-rename.nvim"
+
 	-- Lua
 	use {
 		"folke/which-key.nvim",
