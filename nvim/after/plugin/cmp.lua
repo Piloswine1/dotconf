@@ -1,6 +1,14 @@
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 
+lspkind.init({
+  symbol_map = {
+    Copilot = "",
+  },
+})
+
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+
 cmp.setup({
 	snippet = {
 		-- REQUIRED by nvim-cmp. get rid of it once we can
@@ -9,11 +17,15 @@ cmp.setup({
 		end,
 	},
 	sorting = {
+		priority_weight = 2,
 		comparators = {
+			--require("copilot_cmp.comparators").prioritize,
+			--require("copilot_cmp.comparators").score,
 			cmp.config.compare.offset,
 			cmp.config.compare.exact,
 			cmp.config.compare.recently_used,
 			require 'clangd_extensions.cmp_scores',
+			cmp.config.compare.locality,
 			cmp.config.compare.kind,
 			cmp.config.compare.sort_text,
 			cmp.config.compare.length,
@@ -25,14 +37,19 @@ cmp.setup({
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
 		['<C-Space>'] = cmp.mapping.complete(),
 		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		['<CR>'] = cmp.mapping.confirm({
+			-- this is the important line
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
+		}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	}),
-	sources = cmp.config.sources({
-		-- TODO: currently snippets from lsp end up getting prioritized -- stop that!
-		{ name = 'nvim_lsp' },
-	}, {
-		{ name = 'path' },
-	}),
+	sources = {
+		-- Copilot Source
+		--{ name = "copilot", group_index = 2 },
+		-- Other Sources
+		{ name = "nvim_lsp", group_index = 2 },
+		{ name = "path", group_index = 2 },
+	},
 	experimental = {
 		ghost_text = true,
 	},
@@ -57,7 +74,10 @@ cmp.setup({
 					return vim_item
 				end
 			end
-			return lspkind.cmp_format({ with_text = false })(entry, vim_item)
+			return lspkind.cmp_format({
+				with_text = false,
+				max_width = 50,
+			})(entry, vim_item)
 		end
 	}
 })
