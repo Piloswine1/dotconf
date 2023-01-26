@@ -7,55 +7,14 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-	--use { "zbirenbaum/copilot.lua" }
-	use {
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "VimEnter",
-		config = function()
-			vim.defer_fn(function()
-				require 'copilot'.setup {
-					suggestion = { enabled = false },
-					panel = { enabled = false },
-					filetypes = {
-						cpp = false,
-						yaml = false,
-						markdown = false,
-						help = false,
-						gitcommit = false,
-						gitrebase = false,
-						hgcommit = false,
-						svn = false,
-						cvs = false,
-						["."] = false,
-					},
-				}
-			end, 100)
-		end,
-	}
-	use {
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function()
-			require 'copilot_cmp'.setup()
-		end
-	}
+	-- Startup time
+	use 'lewis6991/impatient.nvim'
+	use 'dstein64/vim-startuptime'
 
 	-- Session manager
 	use {
 		"olimorris/persisted.nvim",
 		--module = "persisted", -- For lazy loading
-		config = function()
-			require("persisted").setup({
-				save_dir = os.getenv("HOME") .. "/.vim/sessions/",
-				use_git_branch = true,
-				autoload = true,
-				on_autoload_no_session = function()
-					vim.notify("No existing session to load.")
-				end
-			})
-			require("telescope").load_extension("persisted") -- To load the telescope extension
-		end,
 	}
 
 	-- Utils: git, close, motion, etc...
@@ -78,9 +37,18 @@ return require('packer').startup(function(use)
 		config = function() require 'overseer'.setup() end
 	}
 	use 'monaqa/dial.nvim'
+	-- Comments
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
 
+	-- Zen
 	use 'folke/zen-mode.nvim'
-	use 'xiyaowong/virtcolumn.nvim'
+	-- text width line
+	-- use 'xiyaowong/virtcolumn.nvim'
 	--use {
 	--	"Pocco81/true-zen.nvim",
 	--	config = function()
@@ -104,9 +72,17 @@ return require('packer').startup(function(use)
 	}
 
 	-- GUI
-	use 'itchyny/lightline.vim'
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+	}
+	-- use 'itchyny/lightline.vim'
 	use 'folke/todo-comments.nvim'
-	use 'glepnir/dashboard-nvim'
+	-- use 'glepnir/dashboard-nvim'
+	use {
+		'goolord/alpha-nvim',
+		requires = { 'nvim-tree/nvim-web-devicons' },
+	}
 	use 'kevinhwang91/nvim-hlslens'
 	use 'petertriho/nvim-scrollbar'
 	use 'andymass/vim-matchup'
@@ -176,13 +152,43 @@ return require('packer').startup(function(use)
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/nvim-cmp'
 	use 'ray-x/lsp_signature.nvim'
+	--use { "zbirenbaum/copilot.lua" }
+	use {
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "VimEnter",
+		config = function()
+			vim.defer_fn(function()
+				require 'copilot'.setup {
+					suggestion = { enabled = false },
+					panel = { enabled = false },
+				}
+			end, 100)
+		end,
+	}
+	use {
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require 'copilot_cmp'.setup()
+		end
+	}
+	--Snippets
+	use "L3MON4D3/LuaSnip"
+	use "saadparwaiz1/cmp_luasnip"
+	use {
+		"rafamadriz/friendly-snippets",
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end
+	}
 
 	-- Inlay hints
 	-- use 'lvimuser/lsp-inlayhints.nvim'
 
 	-- Only because nvim-cmp _requires_ snippets
-	use 'hrsh7th/cmp-vsnip'
-	use 'hrsh7th/vim-vsnip'
+	-- use 'hrsh7th/cmp-vsnip'
+	-- use 'hrsh7th/vim-vsnip'
 
 	-- LSP batteries
 	use 'simrat39/rust-tools.nvim'

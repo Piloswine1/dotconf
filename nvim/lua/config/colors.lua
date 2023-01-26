@@ -2,6 +2,7 @@ if vim.g.neovide == true then
 	require 'tokyonight'.setup {}
 else
 	require 'tokyonight'.setup {
+		-- transparent = true,
 		on_highlights = function(hl, c)
 			hl.DiagnosticUnderlineError = { italic = true, fg = c.error, sp = c.error }
 			hl.DiagnosticUnderlineWarn  = { italic = true, fg = c.warning, sp = c.warning }

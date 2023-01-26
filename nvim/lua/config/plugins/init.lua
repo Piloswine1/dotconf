@@ -5,7 +5,10 @@ require 'todo-comments'.setup {}
 require 'trouble'.setup {}
 
 require 'indent_blankline'.setup {
-	filetype_exclude = { "dashboard" },
+	filetype_exclude = { 
+		"dashboard",
+		"alpha"
+	},
 	show_end_of_line = false,
 	-- show_current_context = true,
 }

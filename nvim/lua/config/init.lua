@@ -1,3 +1,4 @@
+require("config.packer")
 require("config.colors")
 require("config.keymaps")
 require("config.editor")
