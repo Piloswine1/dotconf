@@ -38,12 +38,8 @@ return require('packer').startup(function(use)
 	}
 	use 'monaqa/dial.nvim'
 	-- Comments
-	use {
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-		end
-	}
+	use 'numToStr/Comment.nvim'
+	use 'JoosepAlviste/nvim-ts-context-commentstring'
 
 	-- Zen
 	use 'folke/zen-mode.nvim'

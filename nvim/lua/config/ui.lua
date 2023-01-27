@@ -29,6 +29,8 @@ vim.opt.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•'
 
 vim.opt.number = true -- Also show current absolute line
 vim.opt.relativenumber = true -- Relative line numbers
+-- selected Cursorline
+vim.opt.cursorline = true
 
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
 vim.opt.diffopt:append('iwhite')
