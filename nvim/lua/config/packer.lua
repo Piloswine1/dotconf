@@ -72,6 +72,15 @@ return require('packer').startup(function(use)
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
+	-- Markdown
+	use {
+		"ellisonleao/glow.nvim",
+		config = function()
+			require 'glow'.setup {
+				glow_path = "/usr/bin/glow",
+			}
+		end
+	}
 	-- use 'itchyny/lightline.vim'
 	use 'folke/todo-comments.nvim'
 	-- use 'glepnir/dashboard-nvim'
