@@ -30,6 +30,7 @@ local on_attach = function(client, bufnr)
 	--Enable completion triggered by <c-x><c-o>
 	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+
 	-- Mappings.
 	local opts = { noremap = true, silent = true }
 
@@ -61,12 +62,14 @@ local on_attach = function(client, bufnr)
 		},
 	})
 
+	-- client.offset_encoding = "utf-16"
+
 	--require'lsp-inlayhints'.on_attach(client, bufnr)
 end
 
 local nvim_lsp = require 'lspconfig'
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
---capabilities.offsetEncoding = { "utf-16" }
+capabilities.offsetEncoding = "utf-8"
 
 nvim_lsp.gopls.setup {
 	on_attach = on_attach,
@@ -77,10 +80,12 @@ require 'clangd_extensions'.setup {
 	server = {
 		on_attach = on_attach,
 		capabilites = capabilities,
+		offsetEncoding = 'utf-8',
 	},
-	--extensions = {
-	--  autoSetHints = false,
-	--}
+	extensions = {
+		offsetEncoding = 'utf-8',
+		-- autoSetHints = false,
+	}
 }
 require 'rust-tools'.setup {
 	server = {
@@ -141,6 +146,11 @@ nvim_lsp.tailwindcss.setup {
 }
 
 nvim_lsp.jsonls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
+
+nvim_lsp.svelte.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 }

@@ -110,6 +110,7 @@ return require('packer').startup(function(use)
 			"MunifTanjim/nui.nvim",
 		}
 	}
+	use 'peterhoeg/vim-qml'
 	-- use 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 	use 'onsails/lspkind.nvim'
 	use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
@@ -157,7 +158,6 @@ return require('packer').startup(function(use)
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/nvim-cmp'
 	use 'ray-x/lsp_signature.nvim'
-	--use { "zbirenbaum/copilot.lua" }
 	use {
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -167,6 +167,18 @@ return require('packer').startup(function(use)
 				require 'copilot'.setup {
 					suggestion = { enabled = false },
 					panel = { enabled = false },
+					-- filetypes = {
+					-- 	yaml = false,
+					-- 	markdown = false,
+					-- 	help = false,
+					-- 	gitcommit = false,
+					-- 	gitrebase = false,
+					-- 	hgcommit = false,
+					-- 	svn = false,
+					-- 	cvs = false,
+					-- 	cpp = false,
+					-- 	["."] = false,
+					-- },
 				}
 			end, 100)
 		end,
