@@ -5,9 +5,10 @@ require 'todo-comments'.setup {}
 require 'trouble'.setup {}
 
 require 'indent_blankline'.setup {
-	filetype_exclude = { 
+	filetype_exclude = {
 		"dashboard",
-		"alpha"
+		"alpha",
+		"help",
 	},
 	show_end_of_line = false,
 	-- show_current_context = true,
@@ -19,6 +20,7 @@ vim.g.loaded_netrwPlugin = 1
 -- require'nvim-tree'.setup {}
 require 'neo-tree'.setup {
 	window = {
+		position = "right",
 		width = 30,
 	},
 	filesystem = {

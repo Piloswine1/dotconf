@@ -28,14 +28,13 @@ return require('packer').startup(function(use)
 	-- use 'm4xshen/autoclose.nvim'
 	use {
 		"windwp/nvim-autopairs",
-		config = function() require("nvim-autopairs").setup {} end
+		config = function() require("nvim-autopairs").setup {
+				disable_filetype = { "TelescopePrompt", "vim" },
+			}
+		end
 	}
 	use "windwp/nvim-ts-autotag"
 	use 'windwp/nvim-spectre'
-	use {
-		'stevearc/overseer.nvim',
-		config = function() require 'overseer'.setup() end
-	}
 	use 'monaqa/dial.nvim'
 	-- Comments
 	use 'numToStr/Comment.nvim'
@@ -45,17 +44,6 @@ return require('packer').startup(function(use)
 	use 'folke/zen-mode.nvim'
 	-- text width line
 	-- use 'xiyaowong/virtcolumn.nvim'
-	--use {
-	--	"Pocco81/true-zen.nvim",
-	--	config = function()
-	--		require("true-zen").setup {
-	--			integrations = {
-	--				tmux = true, -- hide tmux status bar in (minimalist, ataraxis)
-	--				lualine = true -- hide nvim-lualine (ataraxis)
-	--			},
-	--		}
-	--	end,
-	--}
 	-- Theme
 	use 'folke/tokyonight.nvim'
 
@@ -72,18 +60,7 @@ return require('packer').startup(function(use)
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
-	-- Markdown
-	use {
-		"ellisonleao/glow.nvim",
-		config = function()
-			require 'glow'.setup {
-				glow_path = "/usr/bin/glow",
-			}
-		end
-	}
-	-- use 'itchyny/lightline.vim'
 	use 'folke/todo-comments.nvim'
-	-- use 'glepnir/dashboard-nvim'
 	use {
 		'goolord/alpha-nvim',
 		requires = { 'nvim-tree/nvim-web-devicons' },
@@ -110,7 +87,6 @@ return require('packer').startup(function(use)
 			"MunifTanjim/nui.nvim",
 		}
 	}
-	use 'peterhoeg/vim-qml'
 	-- use 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 	use 'onsails/lspkind.nvim'
 	use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
@@ -132,7 +108,6 @@ return require('packer').startup(function(use)
 			require 'fidget'.setup {}
 		end
 	}
-	use "smjonas/inc-rename.nvim"
 
 	-- Lua
 	use {
@@ -140,11 +115,7 @@ return require('packer').startup(function(use)
 		config = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
-			require("which-key").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
+			require("which-key").setup {}
 		end
 	}
 
@@ -155,57 +126,49 @@ return require('packer').startup(function(use)
 	use 'neovim/nvim-lspconfig'
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-cmdline'
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/nvim-cmp'
 	use 'ray-x/lsp_signature.nvim'
-	use {
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "VimEnter",
-		config = function()
-			vim.defer_fn(function()
-				require 'copilot'.setup {
-					suggestion = { enabled = false },
-					panel = { enabled = false },
-					-- filetypes = {
-					-- 	yaml = false,
-					-- 	markdown = false,
-					-- 	help = false,
-					-- 	gitcommit = false,
-					-- 	gitrebase = false,
-					-- 	hgcommit = false,
-					-- 	svn = false,
-					-- 	cvs = false,
-					-- 	cpp = false,
-					-- 	["."] = false,
-					-- },
-				}
-			end, 100)
-		end,
-	}
-	use {
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function()
-			require 'copilot_cmp'.setup()
-		end
-	}
+	-- use {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	event = "VimEnter",
+	-- 	config = function()
+	-- 		vim.defer_fn(function()
+	-- 			require 'copilot'.setup {
+	-- 				suggestion = { enabled = false },
+	-- 				panel = { enabled = false },
+	-- 				-- filetypes = {
+	-- 				-- 	yaml = false,
+	-- 				-- 	markdown = false,
+	-- 				-- 	help = false,
+	-- 				-- 	gitcommit = false,
+	-- 				-- 	gitrebase = false,
+	-- 				-- 	hgcommit = false,
+	-- 				-- 	svn = false,
+	-- 				-- 	cvs = false,
+	-- 				-- 	cpp = false,
+	-- 				-- 	["."] = false,
+	-- 				-- },
+	-- 			}
+	-- 		end, 100)
+	-- 	end,
+	-- }
+	-- use {
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	after = { "copilot.lua" },
+	-- 	config = function()
+	-- 		require 'copilot_cmp'.setup()
+	-- 	end
+	-- }
 	--Snippets
 	use "L3MON4D3/LuaSnip"
 	use "saadparwaiz1/cmp_luasnip"
-	use {
-		"rafamadriz/friendly-snippets",
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load()
-		end
-	}
+	use "rafamadriz/friendly-snippets"
 
 	-- Inlay hints
 	-- use 'lvimuser/lsp-inlayhints.nvim'
-
-	-- Only because nvim-cmp _requires_ snippets
-	-- use 'hrsh7th/cmp-vsnip'
-	-- use 'hrsh7th/vim-vsnip'
 
 	-- LSP batteries
 	use 'simrat39/rust-tools.nvim'
@@ -217,9 +180,8 @@ return require('packer').startup(function(use)
 
 	-- filetype
 	use 'mechatroner/rainbow_csv'
+	use 'peterhoeg/vim-qml'
 
-	-- use 'lvimuser/lsp-inlayhints.nvim'
-	--
 	-- Syntactic language support
 	-- use 'rust-lang/rust.vim'
 	-- use 'cespare/vim-toml', {'branch': 'main'}

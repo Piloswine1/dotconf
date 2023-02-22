@@ -18,10 +18,12 @@ vim.opt.mouse = 'a' -- Enable mouse usage (all modes) in terminals
 
 vim.cmd([[
 au TextYankPost * silent! lua vim.highlight.on_yank()
-" Decent wildmenu
-set wildmenu
-set wildmode=list:longest
 ]]) -- Highlight yank
+
+-- Decent wildmenu
+vim.opt.wildmenu = true
+vim.opt.wildmode = "full"
+vim.opt.wildoptions = "tagfile"
 
 -- Show those damn hidden characters
 -- Verbose: vim.opt.listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
