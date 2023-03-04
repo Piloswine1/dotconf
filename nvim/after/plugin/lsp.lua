@@ -21,6 +21,7 @@ end
 -- END Diagnostics
 
 local navic = require 'nvim-navic'
+local tw_highlight = require('tailwind-highlight')
 
 local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -62,6 +63,12 @@ local on_attach = function(client, bufnr)
 		},
 	})
 
+	-- tailwindcss colors
+	tw_highlight.setup(client, bufnr, {
+		single_column = false,
+		mode = 'background',
+		debounce = 200,
+	})
 	-- client.offset_encoding = "utf-16"
 
 	--require'lsp-inlayhints'.on_attach(client, bufnr)
@@ -73,6 +80,7 @@ capabilities.offsetEncoding = "utf-8"
 
 nvim_lsp.gopls.setup {
 	on_attach = on_attach,
+	capabilites = capabilities,
 }
 -- nvim_lsp.bufls.setup {}
 
@@ -138,6 +146,7 @@ require 'typescript'.setup {
 		single_file_support = false,
 	},
 }
+
 nvim_lsp.tailwindcss.setup {
 	server = {
 		root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
@@ -154,6 +163,12 @@ nvim_lsp.svelte.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 }
+
+-- nvim_lsp.volar.setup {
+-- 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- }
 
 nvim_lsp.lua_ls.setup {
 	on_attach = on_attach,

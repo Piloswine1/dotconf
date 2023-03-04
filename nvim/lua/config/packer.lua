@@ -25,6 +25,8 @@ return require('packer').startup(function(use)
 	use 'godlygeek/tabular'
 	use 'nvim-lua/plenary.nvim'
 	use 'MunifTanjim/nui.nvim'
+	use 'nacro90/numb.nvim'
+	use 'kazhala/close-buffers.nvim'
 	-- use 'm4xshen/autoclose.nvim'
 	use {
 		"windwp/nvim-autopairs",
@@ -73,6 +75,9 @@ return require('packer').startup(function(use)
 	use 'nvim-treesitter/nvim-treesitter-context'
 	use 'lewis6991/gitsigns.nvim'
 	use 'nvim-tree/nvim-web-devicons'
+	use "princejoogie/tailwind-highlight.nvim"
+	use 'NvChad/nvim-colorizer.lua'
+	use { "akinsho/toggleterm.nvim", tag = '*' }
 	-- use 'luukvbaal/nnn.nvim'
 	use 'folke/trouble.nvim'
 	-- Diff
