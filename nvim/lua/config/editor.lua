@@ -1,5 +1,5 @@
-vim.cmd('filetype plugin indent on')
-vim.opt.autoindent = true
+vim.cmd('filetype plugin on')
+-- vim.opt.autoindent = true
 vim.opt.timeoutlen = 300
 vim.opt.showmode = false
 vim.opt.printencoding = 'utf-8'
@@ -13,10 +13,10 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Use wide tabs
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.tabstop = 4
-vim.opt.expandtab = false
+-- vim.opt.shiftwidth = 4
+-- vim.opt.softtabstop = 4
+-- vim.opt.tabstop = 4
+-- vim.opt.expandtab = false
 
 vim.opt.wrap = false
 

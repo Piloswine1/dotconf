@@ -8,4 +8,4 @@ vim.keymap.set("n", "<leader>s", function()
 	end
 end)
 vim.keymap.set({"n", "i"}, "<C-p>", telescope.git_files, {})
-vim.keymap.set("n", "<C-A-b>", ":NeoTreeShowToggle<CR>")
+vim.keymap.set("n", "<leader>b", ":NeoTreeFocusToggle<CR>")

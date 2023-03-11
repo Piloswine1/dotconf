@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
 	-- Utils: git, close, motion, etc...
 	use 'tpope/vim-fugitive'
 	use 'mbbill/undotree'
-	use 'editorconfig/editorconfig-vim'
+	use 'gpanders/editorconfig.nvim'
 	use 'justinmk/vim-sneak'
 	use 'godlygeek/tabular'
 	use 'nvim-lua/plenary.nvim'
