@@ -69,7 +69,13 @@ return require('packer').startup(function(use)
 	}
 	use 'kevinhwang91/nvim-hlslens'
 	use 'petertriho/nvim-scrollbar'
-	use 'andymass/vim-matchup'
+	use {
+		"utilyre/sentiment.nvim",
+		tag = "*",
+		config = function()
+			require("sentiment").setup {}
+		end,
+	}
 	use 'lukas-reineke/indent-blankline.nvim'
 	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 	use 'nvim-treesitter/nvim-treesitter-context'

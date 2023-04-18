@@ -138,20 +138,25 @@ require 'deno-nvim'.setup {
 	},
 }
 
-require 'typescript'.setup {
-	server = {
-		on_attach = on_attach,
-		capabilities = capabilities,
-		root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
-		single_file_support = false,
-	},
-}
+-- require 'typescript'.setup {
+-- 	server = {
+-- 		on_attach = on_attach,
+-- 		capabilities = capabilities,
+-- 		root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+-- 		single_file_support = false,
+-- 	},
+-- }
 
 nvim_lsp.tailwindcss.setup {
 	server = {
 		root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
 			'postcss.config.ts', 'package.json')
 	}
+}
+
+nvim_lsp.cssls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
 }
 
 nvim_lsp.jsonls.setup {
@@ -164,11 +169,11 @@ nvim_lsp.svelte.setup {
 	capabilities = capabilities,
 }
 
--- nvim_lsp.volar.setup {
--- 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
--- 	on_attach = on_attach,
--- 	capabilities = capabilities,
--- }
+nvim_lsp.volar.setup {
+	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
 
 nvim_lsp.lua_ls.setup {
 	on_attach = on_attach,
