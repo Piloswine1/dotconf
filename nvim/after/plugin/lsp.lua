@@ -147,11 +147,16 @@ require 'deno-nvim'.setup {
 -- 	},
 -- }
 
-nvim_lsp.tailwindcss.setup {
-	server = {
-		root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
-			'postcss.config.ts', 'package.json')
-	}
+-- nvim_lsp.tailwindcss.setup {
+-- 	server = {
+-- 		root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+-- 			'postcss.config.ts', 'package.json')
+-- 	}
+-- }
+
+nvim_lsp.unocss.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
 }
 
 nvim_lsp.cssls.setup {
