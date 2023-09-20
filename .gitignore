@@ -1,7 +1,5 @@
 chromium
 cni
-deno.bash
-git-completion.bash
 gitui
 nextjs-nodejs
 yarn
@@ -11,7 +9,6 @@ nushell
 htop
 bottom
 .fzf.bash
-bash_completion.d/
 github-copilot/
 helix/runtime
 create-next-app-nodejs/
