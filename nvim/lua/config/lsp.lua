@@ -1,5 +1,5 @@
 local augroup = vim.api.nvim_create_augroup
-local UserGroup = augroup('User', {})
+local UserGroup = augroup('Piloswine', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 autocmd('LspAttach', {

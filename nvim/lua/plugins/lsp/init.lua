@@ -6,74 +6,33 @@ end
 
 return {
 	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+		"L3MON4D3/LuaSnip",
 		dependencies = {
-			"mason-org/mason.nvim",
-			"mason-org/mason-lspconfig.nvim",
+			"rafamadriz/friendly-snippets",
+		},
+		lazy = true,
+		config = function()
+			require("luasnip").setup()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-path",
-			"hrsh7th/nvim-cmp",
-			"L3MON4D3/LuaSnip",
+			"hrsh7th/cmp-cmdline",
 			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			"j-hui/fidget.nvim",
 		},
 		config = function()
-			local cmp = require('cmp')
-			local cmp_lsp = require("cmp_nvim_lsp")
-			local capabilities = vim.tbl_deep_extend(
-				"force",
-				{},
-				vim.lsp.protocol.make_client_capabilities(),
-				cmp_lsp.default_capabilities())
-
-			require("fidget").setup({})
-			require("mason").setup()
-			require("mason-lspconfig").setup({
-				automatic_installation = false,
-				ensure_installed = {
-					"lua_ls",
-					"rust_analyzer",
-					"gopls",
-				},
-				handlers = {
-					function(server_name) -- default handler (optional)
-						require("lspconfig")[server_name].setup {
-							capabilities = capabilities
-						}
-					end,
-
-					["lua_ls"] = function()
-						local lspconfig = require("lspconfig")
-						lspconfig.lua_ls.setup {
-							capabilities = capabilities,
-							settings = {
-								Lua = {
-									format = {
-										enable = true,
-										-- Put format options here
-										-- NOTE: the value should be STRING!!
-										defaultConfig = {
-											indent_style = "space",
-											indent_size = "2",
-										}
-									},
-								}
-							}
-						}
-					end,
-				}
-			})
-
-			local luasnip = require 'luasnip'
-
+			local cmp = require "cmp"
+			local luasnip = require("luasnip")
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+						luasnip.lsp_expand(args.body) -- For `luasnip` users.
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
@@ -109,20 +68,19 @@ return {
 					{ name = "nvim_lsp", priority = 3 },
 					{ name = 'luasnip',  priority = 5 },
 					{ name = "path" },
-				}, {
 					{ name = 'buffer' },
 				}),
-				enabled = function()
-					-- disable completion in comments
-					local context = require 'cmp.config.context'
-					-- keep command mode completion enabled when cursor is in a comment
-					if vim.api.nvim_get_mode().mode == 'c' then
-						return true
-					else
-						return not context.in_treesitter_capture("comment")
-						    and not context.in_syntax_group("Comment")
-					end
-				end,
+				-- enabled = function()
+				-- 	-- disable completion in comments
+				-- 	local context = require 'cmp.config.context'
+				-- 	-- keep command mode completion enabled when cursor is in a comment
+				-- 	if vim.api.nvim_get_mode().mode == 'c' then
+				-- 		return true
+				-- 	else
+				-- 		return not context.in_treesitter_capture("comment")
+				-- 		    and not context.in_syntax_group("Comment")
+				-- 	end
+				-- end,
 			})
 
 			cmp.setup.cmdline({ '/', '?' }, {
@@ -147,7 +105,72 @@ return {
 				})
 			})
 
-			require("luasnip.loaders.from_vscode").lazy_load()
+			vim.schedule(function()
+				vim.api.nvim_exec_autocmds("User", { pattern = "CmpReady", modeline = false })
+			end)
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+		dependencies = {
+			"stevearc/conform.nvim",
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
+			-- "hrsh7th/cmp-nvim-lsp",
+			-- "hrsh7th/cmp-buffer",
+			-- "hrsh7th/cmp-path",
+			-- "hrsh7th/nvim-cmp",
+			-- "saadparwaiz1/cmp_luasnip",
+			"j-hui/fidget.nvim",
+		},
+		config = function()
+			-- local cmp_lsp = require("cmp_nvim_lsp")
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				{},
+				vim.lsp.protocol.make_client_capabilities())
+				-- cmp_lsp.default_capabilities())
+
+			require("fidget").setup({})
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				automatic_enable = true,
+				automatic_installation = false,
+				ensure_installed = {
+					"lua_ls",
+					"rust_analyzer",
+					"gopls",
+				},
+				handlers = {
+					function(server_name) -- default handler (optional)
+						require("lspconfig")[server_name].setup {
+							capabilities = capabilities
+						}
+					end,
+
+					["lua_ls"] = function()
+						local lspconfig = require("lspconfig")
+						lspconfig.lua_ls.setup {
+							capabilities = capabilities,
+							settings = {
+								Lua = {
+									format = {
+										enable = true,
+										-- Put format options here
+										-- NOTE: the value should be STRING!!
+										defaultConfig = {
+											indent_style = "space",
+											indent_size = "2",
+										}
+									},
+								}
+							}
+						}
+					end,
+				}
+			})
+
 
 			vim.diagnostic.config({
 				-- update_in_insert = true,

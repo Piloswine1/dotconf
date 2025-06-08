@@ -2,7 +2,7 @@ vim.cmd('filetype plugin on')
 -- vim.opt.autoindent = true
 vim.opt.timeoutlen = 300
 vim.opt.showmode = false
-vim.opt.printencoding = 'utf-8'
+-- vim.opt.printencoding = 'utf-8'
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 
