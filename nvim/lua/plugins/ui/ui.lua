@@ -10,8 +10,9 @@ local function diff_source()
 end
 
 return {
-	{"nvim-lualine/lualine.nvim",
-		event="VeryLazy",
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
 		extensions = { "neo-tree", "lazy", "fzf" },
 		opts = {
 			options = {
@@ -60,23 +61,27 @@ return {
 		},
 		-- stylua: ignore
 		keys = {
-			{ "<leader>n", function()
-				if Snacks.config.picker and Snacks.config.picker.enabled then
-					Snacks.picker.notifications()
-				else
-					Snacks.notifier.show_history()
-				end
-			end, desc = "Notification History" },
+			{
+				"<leader>n",
+				function()
+					if Snacks.config.picker and Snacks.config.picker.enabled then
+						Snacks.picker.notifications()
+					else
+						Snacks.notifier.show_history()
+					end
+				end,
+				desc = "Notification History"
+			},
 			{ "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
 		},
 	},
 
 	-- previe line
-{
-  'nacro90/numb.nvim',
-		event="VeryLazy",
-  config = function()
-    require('numb').setup()
-  end,
-}
+	{
+		'nacro90/numb.nvim',
+		event = "VeryLazy",
+		config = function()
+			require('numb').setup()
+		end,
+	}
 }
