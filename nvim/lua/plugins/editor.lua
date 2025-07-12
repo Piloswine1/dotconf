@@ -317,4 +317,17 @@ return {
 		"gpanders/editorconfig.nvim",
 		event = "VeryLazy",
 	},
+
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			zen = { enabled = true },
+		},
+		keys = {
+			{"<leader>z", function () Snacks.zen() end, desc = "Zen mode"}
+		},
+	},
 }

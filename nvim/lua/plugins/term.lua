@@ -1,18 +1,15 @@
 return {
 	{
-		"akinsho/toggleterm.nvim",
-		config = function()
-			require "toggleterm".setup {
-				open_mapping = [[<c-\>]]
-			}
-
-			local function split_terminal_right()
-				local Terminal = require('toggleterm.terminal').Terminal
-				Terminal:new({ direction = 'horizontal' }):open()
-			end
-
-			vim.api.nvim_create_user_command('SplitTerminal', split_terminal_right, {})
-			vim.keymap.set({ "t" }, "<c-s>", "<cmd>SplitTerminal<cr>")
-		end
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			terminal = { enabled = true },
+		},
+		keys = {
+		    { [[<c-\>]], mode = {'n', 't'} , function() Snacks.terminal.toggle() end, desc = "Toggle Terminal" },
+		    -- { [[<c-s>]], mode = {'t'} , function() Snacks.terminal.open() end, desc = "Split Terminal" },
+		},
 	},
 }
